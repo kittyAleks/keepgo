@@ -1,17 +1,24 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 
-const DetailProfile = ({item}) => {
+const DetailProfile = ({item, index}) => {
   return (
-    <View style={{flexDirection: 'row', padding: 10}}>
-      {/*<Image*/}
-      {/*  source={item.avatar}*/}
-      {/*  style={{width: 50, height: 50, borderRadius: 25}}*/}
-      {/*/>*/}
+    <TouchableOpacity
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+      }}>
+      <Image
+        source={{
+          uri: item.avatar,
+        }}
+        style={{width: 50, height: 50, borderRadius: 25}}
+      />
       <View style={{paddingLeft: 10}}>
-        <Text>{item.name}</Text>
+        <Text>{item.first_name}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

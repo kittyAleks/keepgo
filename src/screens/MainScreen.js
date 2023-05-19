@@ -3,6 +3,9 @@ import {View, Text, FlatList} from 'react-native';
 import ScreenWrapper from '../ScreenWrapper/ScreenWrapper';
 import DetailProfile from './DetailProfile';
 import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
+import {receiveUsers} from '../store/actions';
+import detailProfile from './DetailProfile';
 
 const userData = [
   {id: '1', name: 'John'},
@@ -13,26 +16,28 @@ const userData = [
 ];
 
 const MainScreen = () => {
+  const dispatch = useDispatch();
+  const users = useSelector(state => state.users);
+  console.log('uEEsers', users);
+
   useEffect(() => {
     axios
-      .get('https://randomuser.me/api/')
+      .get('https://reqres.in/api/users')
       .then(response => {
-        // handle the response data here
-        console.log('WWWWWresponse', response.data);
+        console.log('WWresponse', response);
+        const users = response.data.data;
+        // Send data to Redux store
+        dispatch(receiveUsers(users));
       })
-      .catch(error => {
-        // handle any errors here
-        console.error(error);
-      });
+      .catch(error => console.log(error));
   }, []);
 
   return (
     <ScreenWrapper>
-      <Text>Main Screen</Text>
       <FlatList
-        data={userData}
-        renderItem={DetailProfile}
-        keyExtractor={item => item.id}
+        data={users}
+        renderItem={item => <DetailProfile item={item.item} />}
+        keyExtractor={item => item.id.toString()}
       />
     </ScreenWrapper>
   );
