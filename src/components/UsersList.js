@@ -4,20 +4,21 @@ import {useNavigation} from '@react-navigation/native';
 
 const UsersList = ({item}) => {
   const navigation = useNavigation();
+  const {avatar, first_name} = item;
+  const imageSourceUri =
+    avatar ??
+    'https://e7.pngegg.com/pngimages/472/36/png-clipart-puppy-pet-dog-lazy-dog.png';
+
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => navigation.navigate('DetailProfile', {item})}>
       <Image
-        source={{
-          uri: item.avatar
-            ? item.avatar
-            : 'https://e7.pngegg.com/pngimages/472/36/png-clipart-puppy-pet-dog-lazy-dog.png',
-        }}
+        source={{uri: imageSourceUri}}
         style={{width: 50, height: 50, borderRadius: 25}}
       />
       <View style={{paddingLeft: 10}}>
-        <Text>{item.first_name}</Text>
+        <Text>{first_name}</Text>
       </View>
     </TouchableOpacity>
   );
